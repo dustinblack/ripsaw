@@ -5,7 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: benchmark-operator
-  namespace: benchmark
+  namespace: ripsaw
 roleRef:
   kind: ClusterRole
   name: cluster-admin
