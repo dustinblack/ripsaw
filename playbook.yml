@@ -61,7 +61,7 @@
         name: "hammerdb"
       vars:
         hammerdb: "{{ workloard.arg }}"
-      when: workload.name == "hammerdb" and workload.args.clients > 0
+      when: workload.name == "hammerdb" 
 
 
     when: workload is defined
