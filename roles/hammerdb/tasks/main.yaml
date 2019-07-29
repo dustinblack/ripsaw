@@ -1,31 +1,15 @@
 ---
 
-- name: Check for running hammerdb pods...
+- name: Start Client
+  k8s:
+    definition: "{{ lookup('template', 'client.yml.j2') | from_yaml }}"
+
+- name: Wait for pod to be running...
   k8s_facts:
     kind: Pod
     api_version: v1
-    namespace: '{{ operator_namespace }}'
+    namespace: "{{ operator_namespace }}"
     label_selectors:
       - app = hammerdb-client
-    ignore_errors: true
-    register: pods
-
-- name: Check for current run
-  stat:
-    path: /tmp/current_run
-  register: state_file
-
-- debug: 
-  msg: "State file : {{ state_file.stat }}"
-
-- name: Reset statefile
-  set_fact:
-    state_file:
-      stat:
-        exists: false
-  when: state_file.stat.exists == true and ( pods is defined and pods|length < 1 )
-
-- name: Create service for server pods 
-  k8s:
-    definition: "{{ lockup('template', 'service.yml.j2'} | from_yaml }}"
-  with_sequence: start=0, count={{}}
+    register: client_pods
+    

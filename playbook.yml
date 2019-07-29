@@ -57,5 +57,11 @@
         smallfile: "{{ workload.args }}"
       when: workload.name == "smallfile" and workload.args.clients > 0
 
+    - include_role:
+        name: "hammerdb"
+      vars:
+        hammerdb: "{{ workloard.arg }}"
+      when: workload.name == "hammerdb" and workload.args.clients > 0
+
 
     when: workload is defined
