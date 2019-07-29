@@ -15,6 +15,7 @@ a performance baseline of Kubernetes cluster on your provider.
 | [Byowl](docs/byowl.md)         | User defined workload  | Working            |
 | [Pgbench](docs/pgbench.md)     | Postgres Performance   | Working            |
 | [Smallfile](docs/smallfile.md) | Storage IO Performance | Working            |
+| [Hammerdb](docs/hammerdb.md)   | Database Performance   | WIP                |
 
 
 ## Installation

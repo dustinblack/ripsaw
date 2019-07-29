@@ -1,0 +1,25 @@
+---
+kind: job
+apiVersion: batch/v1
+metadata:
+    name: '{{ meta.name }}-hammerdb-client
+    namespace: '{{ operator_namespace }}'
+spec:
+    ttlSecondsAfterFinishied: 600
+    template:
+        metadata:
+            labels:
+                app: hammerdb-bench-client
+        spec:
+{% if db_server %}
+        serviceAccountName: benchmark-operator
+        serviceAccount: benchmark-operator
+{% endif %}
+            containers:
+            - name: benchmark
+              image: "quay.io/mkarg/hammerdb:latest"
+              command: ["/bin/sh", "-c"]
+              args:
+                - "hammerdbcli --help"
+        restartPolicy: OnFailure
+        
