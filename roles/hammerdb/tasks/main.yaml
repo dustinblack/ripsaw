@@ -1,15 +1,36 @@
 ---
 
-- name: Start Client
-  k8s:
-    definition: "{{ lookup('template', 'client.yml.j2') | from_yaml }}"
+- name: template db creation script
+  k8s: 
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata: 
+        name: '{{ meta.name }}-hammerdb-config'
+        namespace: '{{ operator_namespace}}'
+      data: 
+        createdb.tcl: "{{ lookup('template', 'createdb.tcl.j2') }}"
 
-- name: Wait for pod to be running...
-  k8s_facts:
-    kind: Pod
-    api_version: v1
-    namespace: "{{ operator_namespace }}"
-    label_selectors:
-      - app = hammerdb-client
-    register: client_pods
+- name: start db creation job
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'db_creation.yml') | from_yaml }}"
+
+
+
+#- name: Start Client
+#  k8s:
+#    state: present
+#    definition: "{{ lookup('template', 'client.yml') | from_yaml }}"
     
+#- name: Wait for pod to be running...
+#  k8s_facts:
+#    kind: Pod
+#    api_version: v1
+#    namespace: '{{ operator_namespace }}'
+#    label_selectors:
+#        -app = hammerdb-client
+#  register: client_pod
+#  delay: 20
+#
+#- name: 

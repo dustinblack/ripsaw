@@ -7,10 +7,12 @@ spec:
   workload:
     name: hammerdb
     args:
-      db_server: false
-      db_port: false
-      warehouses: 1
-      workers: 1
-      protocol: "tcp"
+      db_server: "192.168.42.214"
+      db_port: "30159"
+      db_user: ""
+      db_pass: ""
+      db_warehouses: 1
+      db_num_workers: 1
+      db_tcp: "true"
       runtime: 30
       

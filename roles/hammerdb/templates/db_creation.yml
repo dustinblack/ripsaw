@@ -1,0 +1,29 @@
+---
+
+apiVersion: batch/v1
+kind: "job"
+metadata:
+  name: "{{ meta.name }}-hammerdb"
+  namespace: "{{ operator_namespace }}"
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app: hammerdb
+    spec:
+      containers:
+      - name: hammerdb
+        command: ["/bin/sh", "-c"]
+        #args: ["cd /usr/local; ./hammerdbcli auto /tmp/creationScript"]
+        args: ["cd /usr/local; ./hammerdbcli auto /tmp/createdb.tcl"]
+        image: "quay.io/mkarg/hammerdb:latest"
+        volumeMounts:
+        - name: hammerdb-volume
+          mountPath: "/tmp/"
+      volumes:
+      - name: hammerdb-volume
+        configMap:
+          name: "{{ meta.name }}-hammerdb-config"
+          defaultMode: 0777
+      restartPolicy: OnFailure

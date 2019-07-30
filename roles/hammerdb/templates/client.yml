@@ -1,0 +1,22 @@
+---
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: "{{ meta.name }}-hammerdb-client"
+  namespace: "{{ operator_namespace }}"
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app: hammerdb-client
+    spec:
+      containers:
+      - name: hammerdb
+        image: "quay.io/mkarg/hammerdb:latest"
+        command: ["/bin/sh", "-c"]
+        args:
+          - "cd /usr/local; ./hammerdbcli auto /createdb.tcl"
+      restartPolicy: OnFailure
+        
+        

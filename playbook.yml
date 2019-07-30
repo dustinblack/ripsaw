@@ -60,7 +60,7 @@
     - include_role:
         name: "hammerdb"
       vars:
-        hammerdb: "{{ workloard.arg }}"
+        hammerdb: "{{ workload.args }}"
       when: workload.name == "hammerdb" 
 
 
