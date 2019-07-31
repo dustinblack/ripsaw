@@ -19,7 +19,7 @@ spec:
       - name: hammerdb
         command: ["/bin/sh", "-c"]
         #args: ["cd /usr/local; ./hammerdbcli auto /tmp/creationScript"]
-        args: ["id -u; cat /etc/passwd; cd /usr/local; ./hammerdbcli auto /tmp/createdb.tcl"]
+        args: ["id -u; cat /etc/passwd; ./hammerdbcli auto /tmp/createdb.tcl"]
         image: "quay.io/mkarg/hammerdb:latest"
         volumeMounts:
         - name: hammerdb-volume
